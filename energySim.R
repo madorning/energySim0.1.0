@@ -142,7 +142,7 @@ prepSurfaces <- list(habitat = prepHabitat, criticalConcern = prepCriticalArea,
                      ownership = prepOwnerTypes)
 
 ## ------------------------------------------------------------------------
-# Create road network
+# Create existing road network (for roads option 1)
 nVertices <- 500
 road1 <- cbind(seq(0, 2000, length.out = nVertices),
                seq(0, 100, length.out = nVertices)*sin(seq(-pi, 1.5*pi,
@@ -155,6 +155,14 @@ road2 <- cbind(200*cos(seq(-pi, 1.5*pi, length.out = nVertices)) +
 prepRoads <- rbind(road1, road2, cbind(road1[,1],rev(road1[,2]) + 700))
 plot(prepRoads, axes = TRUE, main = 'Existing Road Network', xlab = 'Easting (m)',
      ylab = 'Northing (m)', pch = '.')
+
+## ------------------------------------------------------------------------
+# Create road segment distribution (for roads option 2)
+
+# Creat a distribution of road segment lengths in meters
+# Values must be >= 0
+prepRoadDist <- rnorm(nMC, mean = 500, sd = 100)
+prepRoadDist[prepRoadDist < 0] <- 0
 
 ## ------------------------------------------------------------------------
 # RUSLE - create dummy factor rasters

@@ -276,6 +276,83 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
   roadReturn
 }
 
+########################## makeRoadsD - from Distribution ##############################
+#' Place multiple linear roads
+#' @description Default returns total 'road length' by drawing a segment length from a user provided
+#' distribution (\code{roadNodes}) for each simulated pad (\code{xyStarts}) 
+#' @param xyStarts Matrix of easting (1st column) and northing (2nd column) of new pad center locations.
+#' Corresponding eastings and northings assumed to be in the same row.
+#' @param roadNodes Matrix of existing vertices of current road network. Easting (1st column) and
+#' northing (2nd column) pairs. Corresponding eastings and northings assumed to be in the same row.
+#' @param totalLength Default value is \code{TRUE} and only the total length of roads is returned.
+#' If \code{FALSE}, a list \code{xyEnds} containing the ending xy coordinates from the
+#' \code{roadNodes} are returned for each pad in addition to the total length of roads.
+#' @return If \code{totalLength} is \code{TRUE}, the total length of road using a
+#' Euclidean distance between starting and ending locations is returned.
+#' If \code{totalLength} is \code{FALSE}, a list \code{xyEnds} containing the ending xy coordinates
+#' from the \code{roadNodes} are returned for each pad in addition to the total length of roads.
+#' @note Edited by CDMartinez  15 Mar 16
+#' @author Created by CDMartinez 15 Mar 16
+#' @details A K-D tree, or K-dimensional tree, is a binary search tree data structure used for organizing points
+#' that can be used for quick and efficient sorting and nearest neighbor searching of large sets of points.
+#' @import RANN
+#' @examples library(raster)
+#' set.seed(46)
+#' OGasmt <- continuousAssessment(auMC = 5,
+#' auType = 'Gas',
+#' auProbability = 1,
+#' auAreaProductive = c(100,400,800),
+#' auAreaDrainage = c(10,20,40),
+#' auPercAreaUntested = c(93,96,99),
+#' auPercAreaSweet = c(100,100,100),
+#' auPercFutureSS = c(20,40,50),
+#' auEURss = c(0.15,0.4,0.65),
+#' auLGR = c(.08,.5,1),
+#' year = 2016)
+#'
+#' OGasmt <- convertAcre2sqMeter(OGasmt)
+#'
+#' rBase <- raster(resolution = c(10,10), xmn = 0, xmx = 2000, ymn = 0, ymx = 2000)
+#' values(rBase) <- sample(1:10, 40000, replace = TRUE)
+#'
+#' points <- rbind(c(250,250),c(250,1750),c(1750,1750),c(1750,250),c(250,250))
+#' shape <- SpatialPolygons(list(Polygons(list(Polygon(points)), 'auOutline')))
+#'
+#' plot(rBase, xlim = c(0,2000), ylim = c(0,2000))
+#' lines(shape)
+#'
+#' spatialPrep <- prepareSimSpatial(surfaceRaster = rBase, shape, OGasmt)
+#' distributionPrep <- prepareSimDistributions(spatialPrep,wellsPerPad = 3,
+#' padArea = 500, EA = OGasmt, numIterations=5)
+#'
+#' # Create road network
+#' nVertices <- 500
+#' road1 <- cbind(seq(0, 2000, length.out = nVertices),
+#' seq(0, 100, length.out = nVertices)*sin(seq(-pi, 1.5*pi, length.out = nVertices)) + 600)
+#' road2 <- cbind(200*cos(seq(-pi, 1.5*pi, length.out = nVertices)) +
+#' seq(200, 1800, length.out = nVertices), seq(0, 2000, length.out = nVertices))
+#' # Prepare road input: a two-column matrix of (Easting, Northing)
+#' prepRoads <- rbind(road1, road2, cbind(road1[,1],rev(road1[,2]) + 700))
+#'
+#' pads <- placePads(distributionPrep, 5)
+#' roadLength <- makeRoads(xyStarts = pads$xyPadCenter, roadNodes = prepRoads)
+#' @export
+makeRoadsD = function(xyStarts, roadDist, totalLength = TRUE){
+  # roadDist = input distribution sample from user (similar to prepareSimDistributions)
+  
+  # draw npads times
+  nPads = nrow(xyStarts) # need to check and make sure this provides the correct number of pads
+  roadSegs = sample(roadDist, size = nPads, replace=TRUE) 
+  
+  # sum total length
+  if(totalLength == TRUE){
+    roadReturn = sum(roadSegs)
+  }else{
+    roadReturn = list(roadSegLengths = roadSegs, roadLength = sum(roadSegs))
+  }
+  roadReturn
+}
+
 #' Calculate soil loss according to RUSLE
 #' @description Calculates raster (cell) based soil loss due to either pads or roads.
 #' @param rusleIn List returned from \code{\link{prepareRusle}}
