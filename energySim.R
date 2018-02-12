@@ -159,8 +159,8 @@ plot(prepRoads, axes = TRUE, main = 'Existing Road Network', xlab = 'Easting (m)
 ## ------------------------------------------------------------------------
 # Create road segment distribution (for roads option 2)
 
-# Creat a distribution of road segment lengths in meters
-# Values must be >= 0
+# Creat a vector of road segment lengths in meters
+# Values must be >= 0 (vector must contain at least 2 numeric values)
 prepRoadDist <- rnorm(nMC, mean = 500, sd = 100)
 prepRoadDist[prepRoadDist < 0] <- 0
 

@@ -380,7 +380,14 @@ simIteration = function(X, simDistList, rasterSurfaceInputs, roads = NULL, soilL
   simOutput = list(surfacePadStats = surfacePadStats)
 
   if(is.null(roads) == FALSE){
-    roadStats = makeRoads(simPads$xyPadCenter, roads, totalLength = totalLength)
+    if(is.matrix(roads) == TRUE){
+      message("Creating roads based on nearest neighbors")
+      roadStats = makeRoads(simPads$xyPadCenter, roads, totalLength = totalLength)
+    }  
+    if(is.vector(roads) == TRUE){
+      message("Creating roads based on road segment length distribution")
+      roadStats = makeRoadsD(simPads$xyPadCenter, roads, totalLength = totalLength)
+    }
     simRoads = placeRoads(simPads, simDistList, totalRoadLength = roadStats, roadWidth = roadWidth, cellProportion = cellProportion)
     surfaceRoadStats = lapply(X = rasterSurfaceInputs, FUN = impactsRoads, roadsIn = simRoads)
 
