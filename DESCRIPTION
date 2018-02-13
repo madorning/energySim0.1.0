@@ -1,0 +1,19 @@
+Package: energySim
+Type: Package
+Title: Spatial Energy Simulation: Linking Subsurface to Surface
+        Resources
+Version: 0.0.2
+Date: 2017-06-14
+Author: Cericia Martinez
+Maintainer: Cericia Martinez <cmartinez@usgs.gov>
+Contributer: Monica Dorning <mdorning@usgs.gov>
+Description: An implementation of the Powell Center Working Group method to incorporate USGS National Oil and Gas Assessment data into modeling of Ecosystem Services impacts under the assumption of energy resource development.
+License: file LICENSE
+Imports: EnvStats, RANN, raster, rgdal, sp, triangle
+Suggests: knitr, MASS, rgeos, rmarkdown
+LazyData: TRUE
+ByteCompile: TRUE
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2017-07-10 20:26:50 UTC; cmartinez

@@ -1,6 +1,11 @@
 ## ----Set MC Iterations---------------------------------------------------
 # Start by importing the package and setting MC iterations
-library(energySim)
+#library(energySim)
+
+
+
+
+
 nMC <- 1000 # Number of spatial energy Monte Carlo iterations to perform (nMC <= ogMC)
 ogMC <- 10000 # Number of USGS Petroleum Assessment iterations to perform (nMC <= ogMC)
 

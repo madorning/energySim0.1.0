@@ -338,13 +338,10 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
 #' roadLength <- makeRoads(xyStarts = pads$xyPadCenter, roadNodes = prepRoads)
 #' @export
 makeRoadsD = function(xyStarts, roadDist, totalLength = TRUE){
-  # roadDist = input distribution sample from user (similar to prepareSimDistributions)
-  
-  # draw npads times
+
   nPads = nrow(xyStarts) # need to check and make sure this provides the correct number of pads
   roadSegs = sample(roadDist, size = nPads, replace=TRUE) 
   
-  # sum total length
   if(totalLength == TRUE){
     roadReturn = sum(roadSegs)
   }else{
