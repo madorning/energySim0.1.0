@@ -291,11 +291,9 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
 #' Euclidean distance between starting and ending locations is returned.
 #' If \code{totalLength} is \code{FALSE}, a list \code{xyEnds} containing the ending xy coordinates
 #' from the \code{roadNodes} are returned for each pad in addition to the total length of roads.
-#' @note Edited by CDMartinez  15 Mar 16
-#' @author Created by CDMartinez 15 Mar 16
-#' @details A K-D tree, or K-dimensional tree, is a binary search tree data structure used for organizing points
-#' that can be used for quick and efficient sorting and nearest neighbor searching of large sets of points.
-#' @import RANN
+#' @author Created by MADorning 02-12-218
+#' @details User provided distribution of road segment lengths is sampled with replacement, where
+#' n = the number of simulated pads
 #' @examples library(raster)
 #' set.seed(46)
 #' OGasmt <- continuousAssessment(auMC = 5,
@@ -325,17 +323,15 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
 #' distributionPrep <- prepareSimDistributions(spatialPrep,wellsPerPad = 3,
 #' padArea = 500, EA = OGasmt, numIterations=5)
 #'
-#' # Create road network
-#' nVertices <- 500
-#' road1 <- cbind(seq(0, 2000, length.out = nVertices),
-#' seq(0, 100, length.out = nVertices)*sin(seq(-pi, 1.5*pi, length.out = nVertices)) + 600)
-#' road2 <- cbind(200*cos(seq(-pi, 1.5*pi, length.out = nVertices)) +
-#' seq(200, 1800, length.out = nVertices), seq(0, 2000, length.out = nVertices))
-#' # Prepare road input: a two-column matrix of (Easting, Northing)
-#' prepRoads <- rbind(road1, road2, cbind(road1[,1],rev(road1[,2]) + 700))
+#' # Create road segment distribution (for roads option 2)
+#'
+#' # Creat a vector of road segment lengths in meters
+#' # Values must be >= 0 (vector must contain at least 2 numeric values)
+#' prepRoadDist <- rnorm(nMC, mean = 500, sd = 100)
+#' prepRoadDist[prepRoadDist < 0] <- 0
 #'
 #' pads <- placePads(distributionPrep, 5)
-#' roadLength <- makeRoads(xyStarts = pads$xyPadCenter, roadNodes = prepRoads)
+#' roadLength <- makeRoadsD(xyStarts = pads$xyPadCenter, roadDist = prepRoadDist)
 #' @export
 makeRoadsD = function(xyStarts, roadDist, totalLength = TRUE){
 

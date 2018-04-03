@@ -2,7 +2,7 @@ Package: energySim
 Type: Package
 Title: Spatial Energy Simulation: Linking Subsurface to Surface
         Resources
-Version: 0.0.2
+Version: 0.1.0.9000
 Date: 2017-06-14
 Author: Cericia Martinez
 Maintainer: Cericia Martinez <cmartinez@usgs.gov>
@@ -16,4 +16,4 @@ ByteCompile: TRUE
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2017-07-10 20:26:50 UTC; cmartinez
+Packaged: 
