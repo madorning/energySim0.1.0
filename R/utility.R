@@ -359,7 +359,10 @@ prepareRusle = function(spatialList, R, K, LS, C, shapes = NULL, shapeAttribute 
 #' @param simDistList The list returned by \code{\link{prepareSimDistributions}}
 #' @param rasterSurfaceInputs Optional. List containing all surface rasters prepared using
 #' \code{\link{prepareChangeShape}} or \code{\link{prepareChangeRaster}}
-#' @param roads Optional. Two column matrix with easting, northing vertices of known road network.
+#' @param roads Optional matrix or vector. If vector is provided, road length is calculated by 
+#' drawing a road length for each simulated pad from the provided vector of values. If matrix is provided, 
+#' road length is calculated using distance between simulated pad and existing road network. 
+#' The matrix format should be two column matrix with easting, northing vertices of known road network.
 #' @param soilLoss Optional. The list returned by \code{\link{prepareRusle}}
 #' @param totalLength Optional. Argument passed to \code{\link{makeRoads}}. \code{TRUE}
 #' or \code{FALSE} boolean for returning total road length.
