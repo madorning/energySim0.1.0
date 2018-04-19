@@ -560,7 +560,7 @@ placeRoads = function(padsIn, simList, totalRoadLength, roadWidth = NULL, cellPr
   roadArea = (roadLengthPerCell/roadSegmentPerCell)*roadWidth
 
   mBase = simList$constantVars$mPads
-  nRoads = round(totalRoadLength/roadLengthPerCell)
+  nRoads = round((totalRoadLength/roadLengthPerCell)*roadSegmentPerCell)
   mMask = mBase + padsIn$mPads
   emptyCells = which(mMask == 0)
   emptyCellsDivided = rep(emptyCells, roadSegmentPerCell) # two 30m roads in a cell
