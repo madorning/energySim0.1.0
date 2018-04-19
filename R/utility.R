@@ -402,6 +402,8 @@ simIteration = function(X, simDistList, rasterSurfaceInputs, roads = NULL, soilL
   }
 
   if(is.null(roads) == FALSE){
+    # ---> rusle pad stats will not be calculated if roads are not provided?
+    # ---- seems like this should be is.null(soilLoss)?
     ruslePadStats = rusle(rusleIn = soilLoss, padsIn = simPads)
     simOutput$ruslePadStats = ruslePadStats
   }

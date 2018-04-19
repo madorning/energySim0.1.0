@@ -564,6 +564,9 @@ placeRoads = function(padsIn, simList, totalRoadLength, roadWidth = NULL, cellPr
   mMask = mBase + padsIn$mPads
   emptyCells = which(mMask == 0)
   emptyCellsDivided = rep(emptyCells, roadSegmentPerCell) # two 30m roads in a cell
+  # ---> note. if roadSegmentPerCell is < 1, this function will not work properly
+  # --- causing an error in the following function
+  # --- note this in documentation or adjust
 
   roadCells = sample(emptyCellsDivided, size = nRoads)
 
