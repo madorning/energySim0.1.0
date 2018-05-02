@@ -282,18 +282,17 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
 #' distribution (\code{roadNodes}) for each simulated pad (\code{xyStarts}) 
 #' @param xyStarts Matrix of easting (1st column) and northing (2nd column) of new pad center locations.
 #' Corresponding eastings and northings assumed to be in the same row.
-#' @param roadNodes Matrix of existing vertices of current road network. Easting (1st column) and
-#' northing (2nd column) pairs. Corresponding eastings and northings assumed to be in the same row.
+#' @param roadNodes Vector representing a distribution of road segment lengths. Length must be >= 2. 
 #' @param totalLength Default value is \code{TRUE} and only the total length of roads is returned.
-#' If \code{FALSE}, a list \code{xyEnds} containing the ending xy coordinates from the
-#' \code{roadNodes} are returned for each pad in addition to the total length of roads.
-#' @return If \code{totalLength} is \code{TRUE}, the total length of road using a
-#' Euclidean distance between starting and ending locations is returned.
-#' If \code{totalLength} is \code{FALSE}, a list \code{xyEnds} containing the ending xy coordinates
-#' from the \code{roadNodes} are returned for each pad in addition to the total length of roads.
+#' If \code{FALSE}, a list containing the lengths of individual road segments
+#' are returned for each pad in addition to the total length of roads.
+#' @return If \code{totalLength} is \code{TRUE}, the total length of road using the sum
+#' of the lengths of the individual road segments is returned.
+#' If \code{totalLength} is \code{FALSE}, a list containing the lengths of individual road segments
+#' are returned for each pad in addition to the total length of roads.
 #' @author Created by MADorning 02-12-218
 #' @details User provided distribution of road segment lengths is sampled with replacement, where
-#' n = the number of simulated pads
+#' n = the number of simulated pads.  Length must be >= 2, values must be >= zero. 
 #' @examples library(raster)
 #' set.seed(46)
 #' OGasmt <- continuousAssessment(auMC = 5,
@@ -489,12 +488,12 @@ rusle = function(rusleIn, padsIn, roadsIn = NULL){
 #' @param padsIn List returned from call to \code{\link{placePads}}
 #' @param simList List returned from \code{\link{prepareSimDistributions}}.
 #' @param totalRoadLength The total length of road to distribute on the landscape. Direct
-#' output from \code{\link{makeRoads}} can be used as an input here.
+#' output from \code{\link{makeRoads}} or \code{\link{makeRoadsD}} can be used as an input here.
 #' @param roadWidth Optional. Number specifying road width. Default is 10 meters.
 #' @param cellProportion Optional. The proportion of a single surface raster cell that can be
 #' covered by road. Default is 2/3 of the cell area.
-#' @details The function \code{\link{makeRoads}} simply returns the total length and
-#' optionally the coordinates of the road. This function will take that total road length and
+#' @details The functions \code{\link{makeRoads}} and \code{\link{makeRoadsD}} return the total length 
+#' of the required roads. This function will take that total road length and
 #' randomly distribute it across the landscape at a set road width for comparison to any
 #' surface raster. Road segments are randomly distributed and there is no connectivity or
 #' continuity implied. If optional parameters are omitted, roads may cover a maximum of 2/3
