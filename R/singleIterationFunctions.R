@@ -204,7 +204,7 @@ placePads = function(simList, entry){
 
 
 ########################## makeRoads K-D Tree ##############################
-#' Place multiple linear roads
+#' Create roads from distances
 #' @description Default returns total 'road length' by connecting given new locations (\code{xyStarts}) and
 #' known existing locations (\code{roadNodes}) using Euclidean distance. Wrapper function for a call to
 #' \code{nn2} which uses a K-D tree from the \code{\link{RANN}} package.
@@ -277,12 +277,13 @@ makeRoads = function(xyStarts,roadNodes,totalLength = TRUE){
 }
 
 ########################## makeRoadsD - from Distribution ##############################
-#' Place multiple linear roads
-#' @description Default returns total 'road length' by drawing a segment length from a user provided
-#' distribution (\code{roadNodes}) for each simulated pad (\code{xyStarts}) 
+#' Create roads from distribution 
+#' @description Default returns total road length. Function draws a segment length from a user provided
+#' distribution (\code{roadDist}) for each simulated pad (\code{xyStarts}). Total road length is 
+#' equal to the sum of all segment lengths.
 #' @param xyStarts Matrix of easting (1st column) and northing (2nd column) of new pad center locations.
 #' Corresponding eastings and northings assumed to be in the same row.
-#' @param roadNodes Vector representing a distribution of road segment lengths. Length must be >= 2. 
+#' @param roadDist Vector representing a distribution of road segment lengths. Length must be >= 2. 
 #' @param totalLength Default value is \code{TRUE} and only the total length of roads is returned.
 #' If \code{FALSE}, a list containing the lengths of individual road segments
 #' are returned for each pad in addition to the total length of roads.

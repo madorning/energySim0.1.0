@@ -2,7 +2,7 @@
 % Please edit documentation in R/singleIterationFunctions.R
 \name{makeRoads}
 \alias{makeRoads}
-\title{Place multiple linear roads}
+\title{Create roads from distances}
 \usage{
 makeRoads(xyStarts, roadNodes, totalLength = TRUE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/singleIterationFunctions.R
 \name{makeRoadsD}
 \alias{makeRoadsD}
-\title{Place multiple linear roads}
+\title{Create roads from distribution}
 \usage{
 makeRoadsD(xyStarts, roadDist, totalLength = TRUE)
 }
@@ -10,11 +10,11 @@ makeRoadsD(xyStarts, roadDist, totalLength = TRUE)
 \item{xyStarts}{Matrix of easting (1st column) and northing (2nd column) of new pad center locations.
 Corresponding eastings and northings assumed to be in the same row.}
 
+\item{roadDist}{Vector representing a distribution of road segment lengths. Length must be >= 2.}
+
 \item{totalLength}{Default value is \code{TRUE} and only the total length of roads is returned.
 If \code{FALSE}, a list containing the lengths of individual road segments
 are returned for each pad in addition to the total length of roads.}
-
-\item{roadNodes}{Vector representing a distribution of road segment lengths. Length must be >= 2.}
 }
 \value{
 If \code{totalLength} is \code{TRUE}, the total length of road using the sum
@@ -23,8 +23,9 @@ If \code{totalLength} is \code{FALSE}, a list containing the lengths of individu
 are returned for each pad in addition to the total length of roads.
 }
 \description{
-Default returns total 'road length' by drawing a segment length from a user provided
-distribution (\code{roadNodes}) for each simulated pad (\code{xyStarts})
+Default returns total road length. Function draws a segment length from a user provided
+distribution (\code{roadDist}) for each simulated pad (\code{xyStarts}). Total road length is 
+equal to the sum of all segment lengths.
 }
 \details{
 User provided distribution of road segment lengths is sampled with replacement, where
