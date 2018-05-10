@@ -23,7 +23,8 @@
 #' @note Edited by CDMartinez  14 Feb 17. Replaces runSingleIterationSweet
 #' which is original implementation.
 #' @author Created by CDMartinez 15 Mar 16
-#' @import raster
+#' @import raster 
+#' @importFrom rgeos gSimplify
 #' @examples library(raster)
 #' set.seed(46)
 #' OGasmt <- continuousAssessment(auMC = 5,
@@ -68,8 +69,9 @@ placePads = function(simList, entry){
   assessmentVars = simList$assessmentVars[entry,]
   constantVars = simList$constantVars
   rastBoundBox = simList$rastBoundBox
-  anOutline = simList$anOutline
-  inOutline = simList$inOutline
+  ## Simplify polygons to prevent topology errors
+  anOutline = gSimplify(simList$anOutline, 1000)
+  inOutline = gSimplify(simList$inOutline, 1000)
 
   # If present in USGS NOGA Assessment
   if(is.null(inOutline) == TRUE){

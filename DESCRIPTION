@@ -9,7 +9,7 @@ Maintainer: Cericia Martinez <cmartinez@usgs.gov>
 Contributer: Monica Dorning <mdorning@usgs.gov>
 Description: An implementation of the Powell Center Working Group method to incorporate USGS National Oil and Gas Assessment data into modeling of Ecosystem Services impacts under the assumption of energy resource development.
 License: file LICENSE
-Imports: EnvStats, RANN, raster, rgdal, sp, triangle
+Imports: EnvStats, RANN, raster, rgdal, sp, triangle, rgeos
 Suggests: knitr, MASS, rgeos, rmarkdown
 LazyData: TRUE
 ByteCompile: TRUE
